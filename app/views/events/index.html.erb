@@ -1,0 +1,56 @@
+<div class="container mx-auto p-8">
+  <!-- Hero Section -->
+  <div class="flex flex-col md:flex-row justify-between items-center mb-12">
+    <div class="md:w-1/2">
+      <p class="text-lg mb-2">All the fun starts here.</p>
+      <h1 class="text-5xl font-bold mb-4">Book Your Tickets for Event!</h1>
+      <ul class="list-disc pl-5 mb-4">
+        <li>Safe, Secure, Reliable ticketing.</li>
+        <li>Your ticket to live entertainment!</li>
+      </ul>
+      <button class="bg-white text-blue-600 px-4 py-2 rounded"><%= link_to "Explore →", "/all-events" %></button>
+    </div>
+    <div class="md:w-1/2 grid grid-cols-2 gap-4">
+      <!-- Placeholder images -->
+      <%= image_tag "image.jpg" %>
+      <%= image_tag "image1.jpg" %>
+      <%= image_tag "image4.png" %>
+      <%= image_tag "image6.png" %>
+    </div>
+  </div>
+
+  <!-- Search Bar -->
+  <div class="mb-8">
+    <%= form_with url: root_path, method: :get, class: "flex" do %>
+      <%= text_field_tag :query, params[:query], placeholder: "Search events...", class: "flex-1 p-2 rounded-l bg-gray-800 text-white" %>
+      <%= submit_tag "Search", class: "bg-indigo-600 p-2 rounded-r" %>
+    <% end %>
+  </div>
+
+  <!-- Carousel of Recent Events -->
+  <h2 class="text-3xl font-bold mb-4">Recent Events</h2>
+  <div class="overflow-x-auto flex space-x-4 pb-4">
+    <% @events.each do |event| %>
+      <div class="min-w-[200px] bg-gray-800 p-4 rounded flex flex-col justify-between" style="width: 200px;">
+        <div>
+          <h3 class="text-xl"><%= event.name %></h3>
+          <p><%= event.date %></p>
+          <p>Venue: <%= event.venue %></p>
+        </div>
+        <%= link_to "Details", event_path(event), class: "text-indigo-400 mt-2 block" %>
+      </div>
+    <% end %>
+  </div>
+
+  <!-- Featured Events Grid -->
+  <h2 class="text-3xl font-bold mb-4">Featured Events</h2>
+  <p>Be sure not to miss these Event today.</p>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <% @events.first(3).each do |event| %>
+      <div class="bg-gray-800 p-4 rounded">
+        <h3 class="text-xl"><%= event.name %></h3>
+        <p><%= event.date %></p>
+      </div>
+    <% end %>
+  </div>
+</div>

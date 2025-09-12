@@ -1,0 +1,49 @@
+<div class="container mx-auto p-8">
+  <h1 class="text-4xl font-bold mb-6 text-white">Create New Event</h1>
+  <%= form_with(model: @event, local: true, multipart: true) do |form| %>
+    <% if @event.errors.any? %>
+      <div class="bg-red-500 text-white p-3 rounded-lg mb-4">
+        <ul>
+          <% @event.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="mb-4">
+      <%= form.label :name, "Event Name", class: "block text-white text-sm font-medium" %>
+      <%= form.text_field :name, class: "w-full p-2 bg-gray-800 text-white rounded", required: true %>
+    </div>
+
+    <div class="mb-4">
+      <%= form.label :image, "Event Image", class: "block text-white text-sm font-medium" %>
+      <%= form.file_field :image, class: "w-full p-2 bg-gray-800 text-white rounded", required: true %>
+    </div>
+
+    <div class="mb-4">
+      <%= form.label :date, "Event Date", class: "block text-white text-sm font-medium" %>
+      <%= form.date_field :date, class: "w-full p-2 bg-gray-800 text-white rounded", required: true %>
+    </div>
+
+    <div class="mb-4">
+      <%= form.label :venue, "Venue", class: "block text-white text-sm font-medium" %>
+      <%= form.text_field :venue, class: "w-full p-2 bg-gray-800 text-white rounded", required: true %>
+    </div>
+
+    <div class="mb-4">
+      <%= form.label :price, "Price (per ticket)", class: "block text-white text-sm font-medium" %>
+      <%= form.number_field :price, step: 0.01, class: "w-full p-2 bg-gray-800 text-white rounded", required: true %>
+    </div>
+
+    <div class="mb-4">
+      <%= form.label :tickets_available, "Tickets Available", class: "block text-white text-sm font-medium" %>
+      <%= form.number_field :tickets_available, min: 0, class: "w-full p-2 bg-gray-800 text-white rounded", required: true %>
+    </div>
+
+    <div class="mb-4">
+      <%= form.submit "Create Event", class: "bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600" %>
+    </div>
+  <% end %>
+  <%= link_to "Back to Dashboard", admin_dashboard_events_path, class: "bg-gray-500 text-white px-4 py-2 rounded mt-4" %>
+</div>

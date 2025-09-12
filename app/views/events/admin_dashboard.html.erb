@@ -1,0 +1,31 @@
+<div class="container mx-auto p-8">
+  <h1 class="text-4xl font-bold mb-6">Admin Dashboard</h1>
+  <%= link_to "Create New Event", new_event_path, class: "bg-green-500 text-white px-4 py-2 rounded mb-4 inline-block hover:bg-green-600" %>
+  <table class="w-full border-collapse mb-6">
+    <thead>
+      <tr class="bg-gray-800 text-white">
+        <th class="p-4 text-left">Name</th>
+        <th class="p-4 text-left">Date</th>
+        <th class="p-4 text-left">Venue</th>
+        <th class="p-4 text-left">Price</th>
+        <th class="p-4 text-left">Tickets Available</th>
+        <th class="p-4 text-left">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @events.each do |event| %>
+        <tr class="bg-gray-700 text-white">
+          <td class="p-4"><%= event.name %></td>
+          <td class="p-4"><%= event.date %></td>
+          <td class="p-4"><%= event.venue %></td>
+          <td class="p-4"><%= number_to_currency(event.price) %></td>
+          <td class="p-4"><%= event.tickets_available %></td>
+          <td class="p-4">
+            <%= link_to "Edit", edit_event_path(event), class: "bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600" %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <%= link_to "Back to Home", root_path, class: "bg-gray-500 text-white px-4 py-2 rounded" %>
+</div>

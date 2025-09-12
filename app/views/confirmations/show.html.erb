@@ -1,0 +1,30 @@
+<div class="min-h-screen bg-gradient-to-br from-green-100 to-green-300 flex items-center justify-center p-8">
+  <div class="bg-orange rounded-2xl shadow-2xl w-full max-w-md p-8 text-center">
+    <h1 class="text-3xl font-bold text-green-600 mb-4">Purchase Confirmed!</h1>
+    <p class="text-lg mb-4">Congratulations! You've successfully purchased <%= session[:last_purchase_items] || current_user.purchases.sum { |p| p.quantity } %> ticket<%= session[:last_purchase_items].to_i > 1 ? 's' : '' %>.</p>
+    <p class="text-lg mb-4">Total: <%= number_to_currency(session[:last_purchase_total] || current_user.purchases.sum { |p| p.total_price }) %></p>
+    <p class="text-sm text-gray-600 mb-6">Enjoy your event experience!</p>
+
+    <!-- Ticket Options -->
+    <div class="mb-6">
+      <%= link_to "Download Tickets", download_tickets_path(format: :pdf), class: "bg-blue-500 text-white font-bold py-2 px-4 rounded-lg transition-all duration-200 hover:bg-blue-600 hover:shadow-md" %>
+      <%= link_to "Email Tickets", send_tickets_path, class: "bg-blue-500 text-white font-bold py-2 px-4 rounded-lg transition-all duration-200 hover:bg-blue-600 hover:shadow-md ml-4" %>
+    </div>
+
+    <!-- Purchase History -->
+    <h2 class="text-xl font-bold text-gray-800 mb-2">Recent Purchases</h2>
+    <% if @purchases.any? %>
+      <ul class="text-left">
+        <% @purchases.each do |purchase| %>
+          <li class="mb-2">
+            <%= purchase.event.name %> - <%= purchase.quantity %> ticket<%= purchase.quantity > 1 ? 's' : '' %> for <%= number_to_currency(purchase.total_price) %> on <%= purchase.purchased_at.strftime("%d %b %Y %H:%M") %>
+          </li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p class="text-gray-600">No recent purchases.</p>
+    <% end %>
+
+    <%= link_to "Back to Home", root_path, class: "bg-blue-500 text-white font-bold py-2 px-4 rounded-lg transition-all duration-200 hover:bg-blue-600 hover:shadow-md mt-6" %>
+  </div>
+</div>

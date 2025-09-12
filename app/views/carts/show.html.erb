@@ -1,0 +1,44 @@
+<div class="container mx-auto p-8">
+  <h1 class="text-4xl font-bold mb-6">Your Checkout</h1>
+  
+  <% if @events.empty? %>
+    <p>Your cart is empty.</p>
+  <% else %>
+    <table class="w-full border-collapse mb-6">
+      <thead>
+        <tr class="bg-gray-800 text-white">
+          <th class="p-4 text-left">Event</th>
+          <th class="p-4 text-left">Quantity</th>
+          <th class="p-4 text-left">Price</th>
+          <th class="p-4 text-left">Subtotal</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @events.each do |item| %>
+          <tr class="bg-gray-700 text-white">
+            <td class="p-4"><%= item[:event].name %></td>
+            <td class="p-4">
+              <div class="flex items-center space-x-2">
+                <%= form_with url: "/cart/add_item", method: :post, local: true do |f| %>
+                  <%= f.hidden_field :event_id, value: item[:event].id %>
+                  <%= f.number_field :quantity, value: 1, min: 1, max: item[:event].tickets_available, class: "p-1 bg-gray-600 text-white w-12 text-center" %>
+                  <%= f.submit "▲", class: "bg-green-500 text-white px-2 py-1 rounded hover:bg-green-600" %>
+                <% end %>
+                <%= form_with url: "/cart/remove_item", method: :post, local: true do |f| %>
+                  <%= f.hidden_field :event_id, value: item[:event].id %>
+                  <%= f.submit "▼", class: "bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600" %>
+                <% end %>
+                <span class="ml-2"><%= item[:quantity] %></span>
+              </div>
+            </td>
+            <td class="p-4"><%= number_to_currency(item[:event].price) %></td>
+            <td class="p-4"><%= number_to_currency(item[:event].price * item[:quantity]) %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <p class="text-2xl font-bold">Total: <%= number_to_currency(@total) %></p>
+    
+    <%= button_to "Complete Purchase", purchase_cart_path, method: :post, class: "bg-yellow-400 text-black font-bold py-2 px-4 rounded-lg transition-all duration-200 hover:bg-blue-600 hover:shadow-md" %>
+  <% end %>
+</div>

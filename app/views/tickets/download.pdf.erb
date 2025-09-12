@@ -1,0 +1,7 @@
+<% @purchases.each do |purchase| %>
+  <h2>Ticket for <%= purchase.event.name %></h2>
+  <p>Quantity: <%= purchase.quantity %></p>
+  <p>Total: <%= number_to_currency(purchase.total_price) %></p>
+  <p>Purchased on: <%= purchase.purchased_at.strftime("%d %b %Y %H:%M") %></p>
+  <hr>
+<% end %>

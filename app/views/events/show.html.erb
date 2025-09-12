@@ -1,0 +1,53 @@
+<div class="container mx-auto p-8 bg-black text-white">
+  <!-- Header -->
+  <h1 class="text-6xl font-bold mb-4">DELVE INTO <%= @event.name.upcase %></h1>
+  <div class="mb-8">
+    <% case @event.name %>
+    <% when "Summer Music Festival" %>
+      <%= image_tag "wavy-background.jpg", alt: @event.name, class: "w-full h-64 object-cover rounded-lg" %>
+    <% when "Art Exhibition Gala" %>
+      <%= image_tag "art.png", alt: @event.name, class: "w-full h-64 object-cover rounded-lg" %>
+    <% when "Charity Run Event" %>
+      <%= image_tag "charity-run.png", alt: @event.name, class: "w-full h-64 object-cover rounded-lg" %>
+    <% when "Food Truck Festival" %>
+      <%= image_tag "event4.png", alt: @event.name, class: "w-full h-64 object-cover rounded-lg" %>
+    <% when "Comedy Night Show" %>
+      <%= image_tag "event6.png", alt: @event.name, class: "w-full h-64 object-cover rounded-lg" %>
+    <% when "Tech Meetup" %>
+      <%= image_tag "event3.png", alt: @event.name, class: "w-full h-64 object-cover rounded-lg" %>
+    <% when "Yoga Retreat Day" %>
+      <%= image_tag "evnt.png", alt: @event.name, class: "w-full h-64 object-cover rounded-lg" %>
+    <% when "Book Club Gathering" %>
+      <%= image_tag "art1.png", alt: @event.name, class: "w-full h-64 object-cover rounded-lg" %>
+    <% when "Dance Party Night" %>
+      <%= image_tag "events1.png", alt: @event.name, class: "w-full h-64 object-cover rounded-lg" %>
+    <% when "Film Screening Event" %>
+      <%= image_tag "run1.png", alt: @event.name, class: "w-full h-64 object-cover rounded-lg" %>
+    <% else %>
+      <%= image_tag "image2.jpg", alt: @event.name, class: "w-full h-64 object-cover rounded-lg" %>
+    <% end %>
+  </div>
+  <p class="text-lg mb-8">Explore this event: <%= @event.name %>, happening on <%= @event.date %>. Venue: <%= @event.venue %>.</p>
+  <p class="text-yellow-400 font-bold">PLAN YOUR VISIT →</p>
+
+  <!-- Tickets -->
+  <p>Tickets Available: <%= @event.tickets_available %></p>
+  <p>Price: <%= @event.price %></p><br>
+  <% if user_signed_in? %>
+    <% if @event.tickets_available > 0 %>
+      <%= form_with url: "/cart/add_item", method: :post do %>
+        <%= hidden_field_tag :event_id, @event.id %>
+        <%= number_field_tag :quantity, 1, min: 1, max: @event.tickets_available, class: "p-2 bg-gray-800 text-white w-20" %>
+        <%= submit_tag "Add to Cart", class: "bg-yellow-400 text-black font-bold py-2 px-4 rounded-lg transition-all duration-200 hover:bg-blue-600 hover:shadow-md" %>
+      <% end %>
+      
+    <% else %>
+      <button disabled class="bg-gray-400 text-black px-4 py-2">Out of Stock</button>
+    <% end %>
+  <% else %>
+    <%= link_to "Log in to Buy Ticket", new_user_session_path, class: "bg-white text-blue-600 px-4 py-2 rounded" %>
+  <% end %>
+
+  <!-- Social Links -->
+  
+</div>

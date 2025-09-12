@@ -1,0 +1,15 @@
+<div class="container mx-auto p-8">
+  <h1 class="text-4xl font-bold mb-4">Checkout for <%= @event['name'] %></h1>
+  <p>Date: <%= @event['date'] %></p>
+  <!-- Simulated Payment Form -->
+  <form class="bg-gray-800 p-4 rounded">
+    <label class="block mb-2">Card Number</label>
+    <input type="text" class="w-full p-2 mb-4 bg-gray-900">
+    <label class="block mb-2">Expiration Date</label>
+    <input type="text" class="w-full p-2 mb-4 bg-gray-900">
+    <label class="block mb-2">CVV</label>
+    <input type="text" class="w-full p-2 mb-4 bg-gray-900">
+    <button type="submit" class="bg-indigo-600 p-2 w-full">Pay Now (Simulated)</button>
+  </form>
+  <p class="mt-4">This is a simulated checkout. No real payment is processed.</p>
+</div>
