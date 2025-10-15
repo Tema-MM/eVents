@@ -12,3 +12,30 @@ Event.create!([
   { name: "Dance Party Night", date: "2025-10-10", venue: "Nightclub Downtown", price: 45.00, tickets_available: 180 },
   { name: "Film Screening Event", date: "2025-10-15", venue: "Cinema Hall", price: 25.00, tickets_available: 140 }
 ])
+
+# Stress test: bulk-generate events unless already present
+if ENV["STRESS_SEED"].present?
+  require "securerandom"
+  require "date"
+  total = (ENV["STRESS_SEED"].to_i > 0 ? ENV["STRESS_SEED"].to_i : 2000)
+  puts "Generating #{total} random events..."
+  venues = ["City Park", "Art Gallery Downtown", "Central Park", "Riverfront Plaza", "Local Theater", "Innovation Hub", "Beachfront Resort", "Library Cafe", "Nightclub Downtown", "Cinema Hall"]
+  names = ["Music Fest", "Art Gala", "Charity Run", "Food Trucks", "Comedy Night", "Tech Meetup", "Yoga Retreat", "Book Club", "Dance Party", "Film Screening"]
+  now = Date.today
+
+  batch = []
+  total.times do |i|
+    name = "#{names.sample} #{SecureRandom.hex(2)}"
+    date = now + rand(-90..180)
+    venue = venues.sample
+    price = rand(5..100)
+    tickets = rand(0..500)
+    batch << { name: name, date: date, venue: venue, price: price, tickets_available: tickets, created_at: Time.now, updated_at: Time.now }
+    if batch.size >= 1000
+      Event.insert_all(batch)
+      batch.clear
+    end
+  end
+  Event.insert_all(batch) if batch.any?
+  puts "Done."
+end

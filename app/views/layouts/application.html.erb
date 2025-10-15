@@ -21,12 +21,28 @@
   </head>
 
   <body class="text-white font-inter">
-    <% if notice %>
-      <p class="bg-green-900 text-white p-2 text-center fixed top-0 w-full"><%= notice %></p>
-    <% end %>
-    <% if alert %>
-      <p class="bg-red-900 text-white p-2 text-center fixed top-0 w-full"><%= alert %></p>
-    <% end %>
+    <div class="fixed top-4 right-4 z-50 space-y-3">
+      <% flash.each do |type, message| %>
+        <% bg = case type.to_s
+               when 'notice', 'success' then 'bg-green-600'
+               when 'alert', 'error' then 'bg-red-600'
+               else 'bg-gray-700'
+               end %>
+        <div data-controller="flash" class="text-white shadow-lg rounded-lg px-4 py-3 min-w-[280px] max-w-sm flex items-start gap-3 <%= bg %> bg-opacity-90 backdrop-blur-sm animate-[fadeIn_.2s_ease-out]">
+          <div class="pt-0.5">
+            <% if ['notice','success'].include?(type.to_s) %>
+              <!-- check icon -->
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-7.25 7.25a1 1 0 01-1.414 0l-3-3a1 1 0 111.414-1.414l2.293 2.293 6.543-6.543a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+            <% else %>
+              <!-- exclamation icon -->
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.72-1.36 3.485 0l6.518 11.591c.75 1.334-.213 2.985-1.742 2.985H3.48c-1.53 0-2.492-1.651-1.742-2.985L8.257 3.1zM11 14a1 1 0 10-2 0 1 1 0 002 0zm-1-2a1 1 0 01-1-1V7a1 1 0 112 0v4a1 1 0 01-1 1z" clip-rule="evenodd"/></svg>
+            <% end %>
+          </div>
+          <div class="flex-1 text-sm leading-5"><%= message %></div>
+          <button type="button" class="opacity-80 hover:opacity-100" data-action="click->flash#close">✕</button>
+        </div>
+      <% end %>
+    </div>
 
     <nav class="flex justify-between items-center p-4 bg-black/50">
       <div class="text-white font-bold">SOCIETY SOCIALS</div>

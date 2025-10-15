@@ -10,9 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_09_02_082216) do
+ActiveRecord::Schema[8.0].define(version: 2025_10_14_021255) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+  enable_extension "pg_trgm"
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -51,6 +52,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_02_082216) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "image_url"
+    t.index ["name"], name: "idx_events_name_trgm", opclass: :gin_trgm_ops, using: :gin
+    t.index ["venue"], name: "idx_events_venue_trgm", opclass: :gin_trgm_ops, using: :gin
   end
 
   create_table "purchases", force: :cascade do |t|
@@ -61,6 +64,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_02_082216) do
     t.datetime "purchased_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "ticket_type"
     t.index ["event_id"], name: "index_purchases_on_event_id"
     t.index ["user_id"], name: "index_purchases_on_user_id"
   end

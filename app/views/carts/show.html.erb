@@ -1,44 +1,67 @@
 <div class="container mx-auto p-8">
-  <h1 class="text-4xl font-bold mb-6">Your Checkout</h1>
-  
-  <% if @events.empty? %>
-    <p>Your cart is empty.</p>
-  <% else %>
-    <table class="w-full border-collapse mb-6">
-      <thead>
-        <tr class="bg-gray-800 text-white">
-          <th class="p-4 text-left">Event</th>
-          <th class="p-4 text-left">Quantity</th>
-          <th class="p-4 text-left">Price</th>
-          <th class="p-4 text-left">Subtotal</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @events.each do |item| %>
-          <tr class="bg-gray-700 text-white">
-            <td class="p-4"><%= item[:event].name %></td>
-            <td class="p-4">
-              <div class="flex items-center space-x-2">
-                <%= form_with url: "/cart/add_item", method: :post, local: true do |f| %>
-                  <%= f.hidden_field :event_id, value: item[:event].id %>
-                  <%= f.number_field :quantity, value: 1, min: 1, max: item[:event].tickets_available, class: "p-1 bg-gray-600 text-white w-12 text-center" %>
-                  <%= f.submit "▲", class: "bg-green-500 text-white px-2 py-1 rounded hover:bg-green-600" %>
-                <% end %>
-                <%= form_with url: "/cart/remove_item", method: :post, local: true do |f| %>
-                  <%= f.hidden_field :event_id, value: item[:event].id %>
-                  <%= f.submit "▼", class: "bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600" %>
-                <% end %>
-                <span class="ml-2"><%= item[:quantity] %></span>
-              </div>
-            </td>
-            <td class="p-4"><%= number_to_currency(item[:event].price) %></td>
-            <td class="p-4"><%= number_to_currency(item[:event].price * item[:quantity]) %></td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
-    <p class="text-2xl font-bold">Total: <%= number_to_currency(@total) %></p>
+    <h1 class="text-4xl font-bold mb-6">Your Checkout</h1>
     
-    <%= button_to "Complete Purchase", purchase_cart_path, method: :post, class: "bg-yellow-400 text-black font-bold py-2 px-4 rounded-lg transition-all duration-200 hover:bg-blue-600 hover:shadow-md" %>
-  <% end %>
-</div>
+    <% if @events.empty? %>
+    <% else %>
+      <table class="w-full border-collapse mb-6">
+        <thead>
+          <tr class="bg-gray-800 text-white">
+            <th class="p-4 text-left">Event</th>
+            <th class="p-4 text-left">Type</th>
+            <th class="p-4 text-left">Quantity</th>
+            <th class="p-4 text-left">Price</th>
+            <th class="p-4 text-left">Subtotal</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @events.each do |item| %>
+            <tr class="bg-gray-700 text-white">
+              <td class="p-4"><%= item[:event].name %></td>
+              <td class="p-4">
+                <% current_type = (session[:ticket_types] || {})[item[:event].id.to_s] || 'Adult' %>
+                <%= form_with url: cart_set_type_path, method: :post, local: true, class: "inline-flex items-center space-x-2" do |f| %>
+                  <%= hidden_field_tag :event_id, item[:event].id %>
+                  <%= select_tag :ticket_type, options_for_select([['Adult','Adult'],['Child','Child']], current_type), class: "bg-gray-600 text-white p-1 rounded" %>
+                  <%= submit_tag "Update", class: "bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600" %>
+                <% end %>
+              </td>
+              <td class="p-4">
+                <div class="flex items-center space-x-2">
+                  <%= form_with url: "/cart/add_item", method: :post, local: true do |f| %>
+                    <%= f.hidden_field :event_id, value: item[:event].id %>
+                    <%= f.number_field :quantity, value: 1, min: 1, max: item[:event].tickets_available, class: "p-1 bg-gray-600 text-white w-12 text-center" %>
+                    <%= f.submit "▲", class: "bg-green-500 text-white px-2 py-1 rounded hover:bg-green-600" %>
+                  <% end %>
+                  <%= form_with url: "/cart/remove_item", method: :post, local: true do |f| %>
+                    <%= f.hidden_field :event_id, value: item[:event].id %>
+                    <%= f.submit "▼", class: "bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600" %>
+                  <% end %>
+                  <span class="ml-2"><%= item[:quantity] %></span>
+                </div>
+              </td>
+              <td class="p-4"><%= number_to_currency(item[:event].price) %></td>
+              <td class="p-4"><%= number_to_currency(item[:event].price * item[:quantity]) %></td>
+          <% end %>
+        </tbody>
+      </table>
+      <p class="text-2xl font-bold">Total: <%= number_to_currency(@total) %></p>
+      <!-- Simple checkout (demo) -->
+      <div class="mt-6">
+        <%= button_to "Checkout", checkout_simple_path, method: :post, class: "bg-green-600 text-white font-bold py-2 px-4 rounded-lg transition-all duration-200 hover:bg-green-700" %>
+        <p class="text-xs text-gray-400 mt-1">Demo checkout: proceeds to confirmation without charging or reducing inventory.</p>
+      </div>
+
+      <div class="mt-6 space-y-3">
+        <h2 class="text-xl font-semibold">Choose a payment method</h2>
+        <%= button_to "Stripe (Card)", checkout_create_session_path, method: :post, class: "bg-indigo-600 text-white font-bold py-2 px-4 rounded-lg transition-all duration-200 hover:bg-indigo-700" %>
+        <p class="text-sm text-gray-300">Stripe test card: 4242 4242 4242 4242 · Any future date · Any CVC · Any ZIP.</p>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 pt-2">
+          <%= link_to "Apple Pay (Simulated)", checkout_simulate_path, class: "block text-center bg-black hover:bg-gray-900 text-white px-4 py-2 rounded" %>
+          <%= link_to "PayPal (Simulated)", checkout_simulate_path, class: "block text-center bg-yellow-500 hover:bg-yellow-600 text-black px-4 py-2 rounded" %>
+          <%= link_to "Bank Transfer (Simulated)", checkout_simulate_path, class: "block text-center bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded" %>
+        </div>
+        <p class="text-xs text-gray-400">Note: Apple Pay, PayPal, and Bank Transfer are simulated for development.</p>
+      </div>
+    <% end %>
+  </div>

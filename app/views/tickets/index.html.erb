@@ -1,0 +1,37 @@
+<div class="container mx-auto p-8">
+  <h1 class="text-3xl font-bold mb-4">My Tickets</h1>
+
+  <% if @purchases.any? %>
+    <table class="w-full border-collapse mb-6">
+      <thead>
+        <tr class="bg-gray-800 text-white">
+          <th class="p-4 text-left">Event</th>
+          <th class="p-4 text-left">Type</th>
+          <th class="p-4 text-left">Quantity</th>
+          <th class="p-4 text-left">Total</th>
+          <th class="p-4 text-left">Purchased</th>
+          <th class="p-4 text-left">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @purchases.each do |purchase| %>
+          <tr class="bg-gray-700 text-white">
+            <td class="p-4"><%= purchase.event.name %></td>
+            <td class="p-4"><%= purchase.respond_to?(:ticket_type) && purchase.ticket_type.present? ? purchase.ticket_type : 'Adult' %></td>
+            <td class="p-4"><%= purchase.quantity %></td>
+            <td class="p-4"><%= number_to_currency(purchase.total_price) %></td>
+            <td class="p-4"><%= purchase.purchased_at.strftime("%d %b %Y %H:%M") %></td>
+            <td class="p-4 whitespace-nowrap align-middle">
+              <div class="inline-flex items-center gap-2">
+                <%= link_to "Download PDF", download_tickets_path(format: :pdf, purchase_ids: [purchase.id]), class: "inline-flex items-center bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600" %>
+                <%= button_to "Email Tickets", send_tickets_path, method: :post, params: { purchase_ids: [purchase.id] }, form: { class: "inline-block align-middle" }, class: "inline-flex items-center bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700" %>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <p class="text-gray-700">You have no tickets yet. <%= link_to "Browse events", all_events_path, class: "text-indigo-600 hover:text-indigo-500 underline" %></p>
+  <% end %>
+</div>

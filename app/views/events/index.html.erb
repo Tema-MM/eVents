@@ -20,26 +20,31 @@
   </div>
 
   <!-- Search Bar -->
-  <div class="mb-8">
-    <%= form_with url: root_path, method: :get, class: "flex" do %>
-      <%= text_field_tag :query, params[:query], placeholder: "Search events...", class: "flex-1 p-2 rounded-l bg-gray-800 text-white" %>
+  <div class="mb-8" data-controller="search">
+    <%= form_with url: root_path, method: :get, class: "flex", data: { search_target: "form" } do %>
+      <%= text_field_tag :query, params[:query], placeholder: "Search events...", class: "flex-1 p-2 rounded-l bg-gray-800 text-white", data: { action: "input->search#search", search_target: "input" } %>
       <%= submit_tag "Search", class: "bg-indigo-600 p-2 rounded-r" %>
     <% end %>
   </div>
 
-  <!-- Carousel of Recent Events -->
+  <!-- Recent Events (no scroll) -->
   <h2 class="text-3xl font-bold mb-4">Recent Events</h2>
-  <div class="overflow-x-auto flex space-x-4 pb-4">
-    <% @events.each do |event| %>
-      <div class="min-w-[200px] bg-gray-800 p-4 rounded flex flex-col justify-between" style="width: 200px;">
-        <div>
-          <h3 class="text-xl"><%= event.name %></h3>
-          <p><%= event.date %></p>
-          <p>Venue: <%= event.venue %></p>
+  <div class="pb-2 px-4">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <% @events.first(6).each do |event| %>
+        <div class="bg-gray-800 p-4 rounded h-36 flex flex-col justify-between overflow-hidden">
+          <div class="space-y-1 overflow-hidden">
+            <h3 class="text-xl break-words"><%= event.name %></h3>
+            <p class="break-words"><%= event.date %></p>
+            <p class="break-words">Venue: <%= event.venue %></p>
+          </div>
+          <%= link_to "Details", event_path(event.respond_to?(:id) ? event.id : event), class: "text-indigo-400 mt-2 block" %>
         </div>
-        <%= link_to "Details", event_path(event), class: "text-indigo-400 mt-2 block" %>
-      </div>
-    <% end %>
+      <% end %>
+    </div>
+  </div>
+  <div class="mt-2 px-4">
+    <%= link_to "View all…", all_events_path(query: params[:query].presence), class: "text-indigo-400 hover:text-indigo-300" %>
   </div>
 
   <!-- Featured Events Grid -->
@@ -47,9 +52,12 @@
   <p>Be sure not to miss these Event today.</p>
   <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
     <% @events.first(3).each do |event| %>
-      <div class="bg-gray-800 p-4 rounded">
-        <h3 class="text-xl"><%= event.name %></h3>
-        <p><%= event.date %></p>
+      <div class="bg-gray-800 p-4 rounded h-36 flex flex-col justify-between overflow-hidden">
+        <div class="space-y-1 overflow-hidden">
+          <h3 class="text-xl break-words"><%= event.name %></h3>
+          <p class="break-words"><%= event.date %></p>
+        </div>
+        <%= link_to "Details", event_path(event.respond_to?(:id) ? event.id : event), class: "text-indigo-400 mt-2 block" %>
       </div>
     <% end %>
   </div>
