@@ -27061,3 +27061,37 @@ Completed 200 OK in 1151ms (Views: 263.0ms | ActiveRecord: 496.9ms (2 queries, 0
 
 
 Started GET "/assets/image6-55d4ba6e.png" for ::1 at 2025-10-15 09:32:30 +0200
+Started GET "/cart" for ::1 at 2025-10-15 09:46:46 +0200
+  [1m[36mActiveRecord::SchemaMigration Load (0.9ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Events'*/[0m
+Processing by CartsController#show as HTML
+  [1m[36mUser Load (1.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='Events',controller='carts'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering carts/show.html.erb within layouts/application
+  Rendered carts/show.html.erb within layouts/application (Duration: 1.3ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 37.9ms | GC: 2.4ms)
+Completed 200 OK in 551ms (Views: 45.3ms | ActiveRecord: 45.3ms (1 query, 0 cached) | GC: 11.0ms)
+
+
+Started GET "/cart" for ::1 at 2025-10-15 09:46:47 +0200
+Processing by CartsController#show as HTML
+  [1m[36mUser Load (3.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='Events',controller='carts'*/[0m
+  Rendering layout layouts/application.html.erb
+  Rendering carts/show.html.erb within layouts/application
+  Rendered carts/show.html.erb within layouts/application (Duration: 0.1ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 0.8ms | GC: 0.0ms)
+Completed 200 OK in 91ms (Views: 1.1ms | ActiveRecord: 3.0ms (1 query, 0 cached) | GC: 0.5ms)
+
+
+Started GET "/" for ::1 at 2025-10-15 09:46:49 +0200
+Processing by EventsController#index as HTML
+  [1m[36mEvent Load (2.6ms)[0m  [1m[34mSELECT "events".* FROM "events" ORDER BY "events"."created_at" DESC LIMIT 6 /*action='index',application='Events',controller='events'*/[0m
+  ↳ app/controllers/events_controller.rb:40:in `rescue in index'
+  Rendering layout layouts/application.html.erb
+  Rendering events/index.html.erb within layouts/application
+  Rendered events/index.html.erb within layouts/application (Duration: 20.3ms | GC: 0.4ms)
+  [1m[36mUser Load (12.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='index',application='Events',controller='events'*/[0m
+  ↳ app/views/layouts/application.html.erb:67
+  Rendered layout layouts/application.html.erb (Duration: 35.3ms | GC: 0.8ms)
+Completed 200 OK in 148ms (Views: 24.6ms | ActiveRecord: 16.2ms (2 queries, 0 cached) | GC: 1.6ms)
+
+
