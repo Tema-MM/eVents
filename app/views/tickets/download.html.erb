@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Tickets</title>
+    <style>
+      body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-size: 14px; color: #111; }
+      .header { display:flex; align-items:center; gap:12px; border-bottom: 2px solid #e5e7eb; padding-bottom: 8px; margin-bottom: 16px; }
+      .logo { height: 32px; }
+      .ticket { border:1px solid #e5e7eb; border-radius: 12px; padding: 12px; margin-bottom: 16px; }
+      .title { font-size: 18px; font-weight: 700; margin: 0 0 6px 0; }
+      .row { display:flex; justify-content: space-between; align-items:center; gap: 12px; }
+      .meta { margin: 6px 0; color:#374151; }
+      .qr { width: 120px; height: 120px; border:1px solid #e5e7eb; }
+      .small { color:#6b7280; font-size: 12px; }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <img class="logo" src="https://upload.wikimedia.org/wikipedia/commons/3/3a/Logo-event-icon.png" alt="Events Logo">
+      <div>
+        <div class="title">Your Event Tickets</div>
+        <div class="small">Generated on <%= Time.current.strftime("%d %b %Y %H:%M") %></div>
+        <div class="small">Purchaser: <strong><%= defined?(@user) && @user.present? ? (@user.name.presence || @user.email) : (defined?(current_user) && current_user.present? ? (current_user.name.presence || current_user.email) : "") %></strong></div>
+      </div>
+    </div>
+
+    <% @purchases.each do |purchase| %>
+      <div class="ticket">
+        <div class="row">
+          <div>
+            <div class="title"><%= purchase.event.name %></div>
+            <div class="meta">Quantity: <strong><%= purchase.quantity %></strong></div>
+            <div class="meta">Ticket type: <strong><%= purchase.respond_to?(:ticket_type) && purchase.ticket_type.present? ? purchase.ticket_type : 'Adult' %></strong></div>
+            <div class="meta">Total: <strong><%= number_to_currency(purchase.total_price) %></strong></div>
+            <div class="meta">Purchased on: <%= purchase.purchased_at.strftime("%d %b %Y %H:%M") %></div>
+          </div>
+          <div>
+            <% qr_data = {
+              purchase_id: purchase.id,
+              user_id: purchase.user_id,
+              event_id: purchase.event_id,
+              quantity: purchase.quantity,
+              purchased_at: purchase.purchased_at&.iso8601
+            }.to_json %>
+              src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=<%= ERB::Util.url_encode(qr_data) %>">
+            <div class="small">Scan at entry</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

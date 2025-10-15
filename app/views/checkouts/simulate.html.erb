@@ -1,0 +1,38 @@
+<div class="container mx-auto p-8">
+  <h1 class="text-3xl font-bold mb-4">Simulated Checkout</h1>
+  <p class="text-gray-300 mb-6">Stripe is not configured. You are in simulation mode.</p>
+
+  <div class="bg-gray-800 rounded p-4 mb-6">
+    <h2 class="text-xl font-semibold mb-2">Order Summary</h2>
+    <table class="w-full border-collapse mb-4">
+      <thead>
+        <tr class="bg-gray-700 text-white">
+          <th class="p-2 text-left">Event</th>
+          <th class="p-2 text-left">Qty</th>
+          <th class="p-2 text-left">Price</th>
+          <th class="p-2 text-left">Subtotal</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @items.each do |item| %>
+          <tr class="text-white">
+            <td class="p-2"><%= item[:event].name %></td>
+            <td class="p-2"><%= item[:quantity] %></td>
+            <td class="p-2"><%= number_to_currency(item[:event].price) %></td>
+            <td class="p-2"><%= number_to_currency(item[:event].price * item[:quantity]) %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <p class="text-right text-lg font-bold">Total: <%= number_to_currency(@total) %></p>
+  </div>
+
+  <div class="space-y-3">
+    <%= button_to "Simulate Card Payment", checkout_success_path, method: :get, class: "bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded" %>
+    <%= button_to "Simulate Apple Pay", checkout_success_path, method: :get, class: "bg-black hover:bg-gray-900 text-white px-4 py-2 rounded" %>
+    <%= button_to "Simulate PayPal", checkout_success_path, method: :get, class: "bg-yellow-500 hover:bg-yellow-600 text-black px-4 py-2 rounded" %>
+    <%= button_to "Simulate Bank Transfer (EFT)", checkout_success_path, method: :get, class: "bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded" %>
+    <p class="text-sm text-gray-400">These buttons simulate a successful payment and will complete your order.</p>
+    <%= link_to "Back to Cart", cart_path, class: "inline-block text-blue-400" %>
+  </div>
+</div>
