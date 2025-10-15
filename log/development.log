@@ -15601,3 +15601,149 @@ Processing by EventsController#all as HTML
 Completed 200 OK in 129ms (Views: 12.6ms | ActiveRecord: 1.3ms (1 query, 0 cached) | GC: 0.0ms)
 
 
+Started GET "/events/1030" for ::1 at 2025-10-15 09:41:15 +0200
+Started GET "/" for ::1 at 2025-10-15 09:41:15 +0200
+  [1m[36mActiveRecord::SchemaMigration Load (14.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='Events'*/[0m
+  
+ActionController::RoutingError (No route matches [GET] "/"):
+  
+Processing by EventsController#show as HTML
+  Parameters: {"id"=>"1030"}
+  [1m[36mEvent Load (34.4ms)[0m  [1m[34mSELECT "events".* FROM "events" WHERE "events"."id" = 1030 LIMIT 1 /*action='show',application='Events',controller='events'*/[0m
+  ↳ app/controllers/events_controller.rb:55:in `set_event'
+  Rendering layout layouts/application.html.erb
+  Rendering events/show.html.erb within layouts/application
+  [1m[36mUser Load (2.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='Events',controller='events'*/[0m
+  ↳ app/views/events/show.html.erb:36
+  Rendered events/show.html.erb within layouts/application (Duration: 49.5ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 269.1ms | GC: 0.0ms)
+Completed 200 OK in 2365ms (Views: 311.9ms | ActiveRecord: 1069.8ms (2 queries, 0 cached) | GC: 40.2ms)
+
+
+Started GET "/" for ::1 at 2025-10-15 09:41:25 +0200
+Processing by EventsController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering events/index.html.erb within layouts/application
+  [1m[36mEvent Load (29.9ms)[0m  [1m[34mSELECT "events".* FROM "events" /*action='index',application='Events',controller='events'*/[0m
+  ↳ app/views/events/index.html.erb:33
+  Rendered events/index.html.erb within layouts/application (Duration: 160.3ms | GC: 46.4ms)
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='index',application='Events',controller='events'*/[0m
+  ↳ app/views/layouts/application.html.erb:51
+  Rendered layout layouts/application.html.erb (Duration: 162.9ms | GC: 46.4ms)
+Completed 200 OK in 248ms (Views: 133.3ms | ActiveRecord: 30.2ms (2 queries, 0 cached) | GC: 46.4ms)
+
+
+Started GET "/all-events" for ::1 at 2025-10-15 09:41:41 +0200
+Processing by EventsController#all as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering events/all.html.erb within layouts/application
+  [1m[36mEvent Load (19.3ms)[0m  [1m[34mSELECT "events".* FROM "events" /*action='all',application='Events',controller='events'*/[0m
+  ↳ app/views/events/all.html.erb:6:in `each_with_index'
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='all',application='Events',controller='events'*/[0m
+  ↳ app/views/events/all.html.erb:96
+  Rendered events/all.html.erb within layouts/application (Duration: 685.1ms | GC: 62.3ms)
+  Rendered layout layouts/application.html.erb (Duration: 686.3ms | GC: 62.5ms)
+Completed 200 OK in 999ms (Views: 667.0ms | ActiveRecord: 19.7ms (2 queries, 0 cached) | GC: 62.5ms)
+
+
+Started GET "/assets/evnt-dc617be1.png" for ::1 at 2025-10-15 09:41:43 +0200
+Started GET "/assets/wavy-background-b4be7b63.jpg" for ::1 at 2025-10-15 09:41:43 +0200
+Started GET "/assets/charity-run-1aa4e953.png" for ::1 at 2025-10-15 09:41:43 +0200
+Started GET "/assets/event4-904f880c.png" for ::1 at 2025-10-15 09:41:43 +0200
+Started GET "/assets/art1-5e98976c.png" for ::1 at 2025-10-15 09:41:43 +0200
+Started GET "/assets/run1-94e48572.png" for ::1 at 2025-10-15 09:41:43 +0200
+Started GET "/assets/event3-ce2b712d.png" for ::1 at 2025-10-15 09:41:43 +0200
+Started GET "/assets/art-70b397ba.png" for ::1 at 2025-10-15 09:41:43 +0200
+Started GET "/assets/events1-98618d32.png" for ::1 at 2025-10-15 09:41:43 +0200
+Started GET "/assets/event6-d9a4b8bd.png" for ::1 at 2025-10-15 09:41:44 +0200
+Started GET "/" for ::1 at 2025-10-15 09:41:54 +0200
+Processing by EventsController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering events/index.html.erb within layouts/application
+  [1m[36mEvent Load (42.3ms)[0m  [1m[34mSELECT "events".* FROM "events" /*action='index',application='Events',controller='events'*/[0m
+  ↳ app/views/events/index.html.erb:33
+  Rendered events/index.html.erb within layouts/application (Duration: 162.5ms | GC: 9.3ms)
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='index',application='Events',controller='events'*/[0m
+  ↳ app/views/layouts/application.html.erb:51
+  Rendered layout layouts/application.html.erb (Duration: 167.7ms | GC: 9.3ms)
+Completed 200 OK in 344ms (Views: 125.4ms | ActiveRecord: 42.9ms (2 queries, 0 cached) | GC: 9.3ms)
+
+
+Started GET "/events/4" for ::1 at 2025-10-15 09:41:57 +0200
+Processing by EventsController#show as HTML
+  Parameters: {"id"=>"4"}
+  [1m[36mEvent Load (0.9ms)[0m  [1m[34mSELECT "events".* FROM "events" WHERE "events"."id" = 4 LIMIT 1 /*action='show',application='Events',controller='events'*/[0m
+  ↳ app/controllers/events_controller.rb:55:in `set_event'
+  Rendering layout layouts/application.html.erb
+  Rendering events/show.html.erb within layouts/application
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='Events',controller='events'*/[0m
+  ↳ app/views/events/show.html.erb:36
+  Rendered events/show.html.erb within layouts/application (Duration: 2.1ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 2.8ms | GC: 0.0ms)
+Completed 200 OK in 91ms (Views: 2.8ms | ActiveRecord: 1.2ms (2 queries, 0 cached) | GC: 0.0ms)
+
+
+Started POST "/cart/add_item" for ::1 at 2025-10-15 09:41:59 +0200
+Processing by CartsController#add_item as TURBO_STREAM
+  Parameters: {"authenticity_token"=>"[FILTERED]", "event_id"=>"4", "quantity"=>"1", "commit"=>"Add to Cart"}
+  [1m[36mUser Load (6.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='add_item',application='Events',controller='carts'*/[0m
+Redirected to http://localhost:3000/cart
+Completed 302 Found in 89ms (ActiveRecord: 6.2ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/cart" for ::1 at 2025-10-15 09:41:59 +0200
+Processing by CartsController#show as TURBO_STREAM
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='Events',controller='carts'*/[0m
+  [1m[36mEvent Load (0.2ms)[0m  [1m[34mSELECT "events".* FROM "events" WHERE "events"."id" = 4 /*action='show',application='Events',controller='carts'*/[0m
+  ↳ app/controllers/carts_controller.rb:6:in `map'
+  Rendering layout layouts/application.html.erb
+  Rendering carts/show.html.erb within layouts/application
+  Rendered carts/show.html.erb within layouts/application (Duration: 54.5ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 55.4ms | GC: 0.0ms)
+Completed 200 OK in 203ms (Views: 57.0ms | ActiveRecord: 0.6ms (2 queries, 0 cached) | GC: 0.0ms)
+
+
+Started POST "/cart/purchase" for ::1 at 2025-10-15 09:42:02 +0200
+Processing by CartsController#purchase as TURBO_STREAM
+  Parameters: {"authenticity_token"=>"[FILTERED]"}
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='purchase',application='Events',controller='carts'*/[0m
+  [1m[36mEvent Load (5.1ms)[0m  [1m[34mSELECT "events".* FROM "events" WHERE "events"."id" = 4 /*action='purchase',application='Events',controller='carts'*/[0m
+  ↳ app/controllers/carts_controller.rb:38:in `map'
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN /*action='purchase',application='Events',controller='carts'*/[0m
+  ↳ app/controllers/carts_controller.rb:49:in `block in purchase'
+  [1m[36mEvent Update (40.4ms)[0m  [1m[33mUPDATE "events" SET "tickets_available" = 0, "updated_at" = '2025-10-15 07:42:02.471581' WHERE "events"."id" = 4 /*action='purchase',application='Events',controller='carts'*/[0m
+  ↳ app/controllers/carts_controller.rb:49:in `block in purchase'
+  [1m[36mTRANSACTION (7.2ms)[0m  [1m[35mCOMMIT /*action='purchase',application='Events',controller='carts'*/[0m
+  ↳ app/controllers/carts_controller.rb:49:in `block in purchase'
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN /*action='purchase',application='Events',controller='carts'*/[0m
+  ↳ app/controllers/carts_controller.rb:51:in `block in purchase'
+  [1m[36mPurchase Create (85.7ms)[0m  [1m[32mINSERT INTO "purchases" ("user_id", "event_id", "quantity", "total_price", "purchased_at", "created_at", "updated_at", "ticket_type") VALUES (1, 4, 1, 15.3, '2025-10-15 07:42:02.680015', '2025-10-15 07:42:02.817559', '2025-10-15 07:42:02.817559', NULL) RETURNING "id" /*action='purchase',application='Events',controller='carts'*/[0m
+  ↳ app/controllers/carts_controller.rb:51:in `block in purchase'
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mCOMMIT /*action='purchase',application='Events',controller='carts'*/[0m
+  ↳ app/controllers/carts_controller.rb:51:in `block in purchase'
+Redirected to http://localhost:3000/confirmation
+Completed 302 Found in 525ms (ActiveRecord: 143.9ms (4 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/confirmation" for ::1 at 2025-10-15 09:42:02 +0200
+Processing by ConfirmationsController#show as TURBO_STREAM
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1 ORDER BY "users"."id" ASC LIMIT 1 /*action='show',application='Events',controller='confirmations'*/[0m
+  [1m[36mPurchase Load (7.0ms)[0m  [1m[34mSELECT "purchases".* FROM "purchases" WHERE "purchases"."user_id" = 1 ORDER BY "purchases"."purchased_at" DESC LIMIT 5 /*action='show',application='Events',controller='confirmations'*/[0m
+  ↳ app/controllers/confirmations_controller.rb:6:in `show'
+  Rendering layout layouts/application.html.erb
+  Rendering confirmations/show.html.erb within layouts/application
+  [1m[36mEvent Load (0.3ms)[0m  [1m[34mSELECT "events".* FROM "events" WHERE "events"."id" = 4 LIMIT 1 /*action='show',application='Events',controller='confirmations'*/[0m
+  ↳ app/views/confirmations/show.html.erb:20
+  [1m[36mEvent Load (0.2ms)[0m  [1m[34mSELECT "events".* FROM "events" WHERE "events"."id" = 163 LIMIT 1 /*action='show',application='Events',controller='confirmations'*/[0m
+  ↳ app/views/confirmations/show.html.erb:20
+  [1m[36mEvent Load (0.2ms)[0m  [1m[34mSELECT "events".* FROM "events" WHERE "events"."id" = 1027 LIMIT 1 /*action='show',application='Events',controller='confirmations'*/[0m
+  ↳ app/views/confirmations/show.html.erb:20
+  [1m[36mCACHE Event Load (0.0ms)[0m  [1m[34mSELECT "events".* FROM "events" WHERE "events"."id" = 1027 LIMIT 1[0m
+  ↳ app/views/confirmations/show.html.erb:20
+  [1m[36mEvent Load (0.2ms)[0m  [1m[34mSELECT "events".* FROM "events" WHERE "events"."id" = 1029 LIMIT 1 /*action='show',application='Events',controller='confirmations'*/[0m
+  ↳ app/views/confirmations/show.html.erb:20
+  Rendered confirmations/show.html.erb within layouts/application (Duration: 9.0ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 9.9ms | GC: 0.0ms)
+Completed 200 OK in 169ms (Views: 10.5ms | ActiveRecord: 8.5ms (7 queries, 1 cached) | GC: 0.0ms)
+
+
